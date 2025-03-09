@@ -1,0 +1,190 @@
+:root {
+    --card-color: black;
+    --background-color: rgba(121, 151, 179, 0.6);
+    --border-color: linear-gradient(to right,
+            white 0%,
+            var(--background-color));
+    --border-avatar-color: var(--background-color);
+
+}
+
+body {
+    background: var(--background-color);
+    font-optical-sizing: auto;
+    font-style: normal;
+    font-family: sans-serif;
+}
+
+
+
+
+.fondo {
+    /*   color: rgba(24, 59, 214, 0.182); */
+    min-height: 30rem;
+    width: 100%;
+    height: 100%;
+    padding-top: 1rem;
+    background: linear-gradient(rgba(121, 151, 179, 0.6), rgba(166, 188, 218, 0.6)), url('/img/bg.jpg');
+    /*  background: url('/img/bg.jpg') no-repeat center center; */
+    background-size: cover;
+    -moz-background-size: cover;
+    -webkit-background-size: cover;
+    -o-background-size: cover;
+    background-attachment: fixed;
+}
+
+.modal {
+    display: none;
+    /* Hidden by default */
+    position: fixed;
+    z-index: 10;
+    padding-top: 10%;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.75);
+}
+
+/* Modal Content */
+.modal-content {
+    background-color: #fefefe;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 30%;
+}
+
+.close {
+    margin: 0px;
+    color: #918e8e;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.footer div {
+    color: rgba(255, 255, 255, .75);
+}
+
+.footer a {
+    color: rgba(255, 255, 255, .75);
+}
+
+.copyleft {
+    display: inline-block;
+    transform: rotate(180deg);
+}
+
+.SVG-white-logo{
+    filter: invert(100%) sepia(40%) saturate(55%) hue-rotate(151deg) brightness(115%) contrast(87%);
+}
+
+
+.etiquetaGoogle {
+    background-color: rgba(245, 222, 179, 0.452);
+    top: 35px;
+    position: relative;
+}
+
+.blink_me {
+    animation: blinker 1s linear infinite;
+}
+
+
+
+/* === CALCULOS STYLES === */
+.resultado {
+    border-radius: 5px;
+    border: 1px solid rgb(5, 23, 43);
+    font-size: 150%;
+    background: rgb(221, 92, 92);
+    padding: 0.1em;
+}
+
+
+.wrapper {
+    box-sizing: border-box;
+    color: white;
+    /*   background: linear-gradient(
+      290deg,
+      rgb(157, 156, 240) 0%,
+      rgb(197, 241, 243) 100%
+    )
+    fixed; */
+    background-size: cover;
+    height: auto;
+    font-weight: 300;
+    line-height: 1.25;
+    display: flex;
+    justify-content: center;
+    margin: 0 auto;
+    /* overflow-x: scroll; */
+    /* background-color: transparent; */
+    position: relative;
+    width: 100%;
+    height: 100%;
+
+}
+
+
+.content {
+    /*   background: linear-gradient(
+    45deg,
+    rgba(97, 161, 239, 1) 0%,
+    rgba(135, 92, 207, 1) 29%,
+    rgba(188, 53, 169, 1) 65%,
+    rgba(251, 8, 129, 1) 100%
+  ); */
+    width: 100%;
+    backface-visibility: hidden;
+    padding: 8vmin 0 2vmin 0;
+    align-items: center;
+    flex-direction: column;
+}
+
+
+button {
+    cursor: pointer;
+    margin: 1.5em 0 0.5em 0;
+    padding: 2px;
+    background: rgba(0, 0, 0, 0.25);
+    font-size: 1em;
+    border: 1px solid white;
+    padding: 5px;
+    transition: all 0.5s;
+    color: white;
+    position: relative;
+}
+
+button:hover {
+    background: white;
+    color: black;
+    box-shadow: 0.1em 0.1em 0 0 black;
+}
+
+
+
+@media (max-width: 55em) {
+
+    .wrapper {
+        margin: 6em 0.5em 0.5em 0.5em;
+    }
+
+
+}
+
+/* === FiN CALCULOS STYLE === */
+
+@keyframes blinker {
+    50% {
+        opacity: 0;
+    }
+}
