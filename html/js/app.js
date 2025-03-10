@@ -5,9 +5,8 @@ var app = new Vue({
     k4Result: null,
     zona: "huelva",
     TA: "TB",
-    Transmisividad: 0.81,
+    Transmisividad: 0.675,
     visibilidad: 8.172,
-    horizonte: true,
     tipo: "Nocturna",
     fondo: "Poca",
     umbral1: null,
@@ -21,7 +20,7 @@ var app = new Vue({
     apariencia_origen: " GpD(2+4)",
     horizonte: false,
     a2: 914,
-    tita: 30,
+    tita: 34,
     a2_I: 563,
     titaI: 19,
 
@@ -39,8 +38,8 @@ var app = new Vue({
     c3_II: 0.85,
 
     Pf: 0.5,
-    b: 1.7,
-    L: 89,
+    b: 2,
+    L: 650,
     h2: 30,
     h3: 21,
     h4: 11,
@@ -48,15 +47,15 @@ var app = new Vue({
     tita2: 80,
     tita3: 31,
     tita4: 62,
-    f: 25,
+    f: 37,
     g: 72,
     n: 2,
     T: 30,
-    h: 1.2,
-    F3: 0.8,
+    h: 4,
+    F3: 0.85,
     F4: 1,
-    F5: 1,
-    H: 28,
+    F5: 3,
+    H: 50,
 
     altura_ojo: 4,
     apariencia_limite: "L0.194 Oc3.806 L0.194 Oc3.806 L0.194 Oc11.806",
@@ -301,8 +300,14 @@ var app = new Vue({
       return Math.log(y) / Math.log(x);
     },
     // Fetch the result from the API
-    getK34: async function (valor1,valor2) {
-      const apiURL = `http://localhost:8000/interpolacion3D/evaluar/${valor1}/${valor2}`;
+    getK34: async function (valor1, valor2) {
+      const apiURL = `http://localhost:8000/abacos/RBFevaluarK34/${valor1}/${valor2}`;
+      const response = await fetch(apiURL);
+      const data = await response.json();
+      return data.valor; // Return the raw value
+    },
+    getK1: async function (valor1, valor2) {
+      const apiURL = `http://localhost:8000/abacos/RBFevaluarK1/${valor1}/${valor2}`;
       const response = await fetch(apiURL);
       const data = await response.json();
       return data.valor; // Return the raw value
@@ -316,7 +321,7 @@ var app = new Vue({
         this.k3Result = null; // Reset the result in case of error
       }
     },
-   
+
     // Call K3 and update k3Result
     fetchK4Result: async function () {
       try {
@@ -345,9 +350,9 @@ var app = new Vue({
       //TODO: SOLO AÑADO UN +0.2
       //Si angulo>30 y=−0.01167x+1.0851
       if (this.tita >= 30) {
-        return (-0.01167 * this.tita + 1.0851).toFixed(4);
+        return (-0.01167 * this.tita + 1.0851+0.2).toFixed(4);
       } else if (this.tita >= 20) {
-        return (-0.0075 * this.tita + 0.96).toFixed(4);
+        return (-0.0075 * this.tita + 0.96 +0.2).toFixed(4);
       } else {
         return (
           (
@@ -455,13 +460,13 @@ var app = new Vue({
           //fprimax = 2 * 0.686 * D - (this.Icalculo * vis ** D) * this.getBaseLog(Math.E,vis);
           fprimax = -[
             0.05 ** -(D / vis) * 2 * 3430000 * 2 * 10 ** -6 * D +
-              3430000 *
-                2 *
-                10 ** -6 *
-                D ** 2 *
-                this.getBaseLog(Math.E, 0.05) *
-                0.05 ** -(D / vis) *
-                (-1 / vis),
+            3430000 *
+            2 *
+            10 ** -6 *
+            D ** 2 *
+            this.getBaseLog(Math.E, 0.05) *
+            0.05 ** -(D / vis) *
+            (-1 / vis),
           ];
           D = D - fx / fprimax;
           //console.log(fx + " " + fprimax + " " + fx / fprimax + " " + D);
@@ -484,19 +489,20 @@ var app = new Vue({
           this.K *
           [
             this.b *
-              (this.h2 * this.L2 * this.K2 +
-                this.h3 * this.L3 * this.K3 +
-                this.K2prima * this.h4 * this.L4 * this.K4),
+            (this.h2 * this.L2 * this.K2 +
+              this.h3 * this.L3 * this.k3Result +
+              this.K2prima * this.h4 * this.L4 * this.k4Result),
           ]
         ).toFixed(2);
       } else {
-        return (
+/*         return (
           this.L1 *
           (this.a2 * this.c2 +
             this.a2_I * this.c2_I +
             this.a3_I * this.Pf * this.c3_I +
             this.a3_II * this.Pf * this.c3_II)
-        ).toFixed(2);
+        ).toFixed(2); */
+        return ( this.h2*this.d2*this.L2*this.K2+this.h3*this.d*this.L3*this.k3Result+this.h4*this.d*this.L4*this.k4Result)
       }
     },
     Ieficaz: function () {

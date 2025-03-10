@@ -5,7 +5,8 @@ from django.http import JsonResponse
 # Create your views here.
 
 import numpy as np
-from scipy.interpolate import Rbf
+from scipy.interpolate import Rbf,interp1d
+
 
 #abako k3,k4
 x = np.array([90, 80, 90, 75, 90, 70, 90, 75, 90, 65, 90, 65, 60, 80, 70, 55, 77, 70, 60, 50, 70, 62, 57, 47, 45, 60, 55, 50, 45, 40, 47, 44, 38, 35, 30])
@@ -26,16 +27,28 @@ y2 = np.array([0.888,0.885,0.875,0.856,0.835,0.805,0.765,0.722,0.670,0.615,0.580
 # Create the RBF interpolator
 rbfk34 = Rbf(x, y, z, function='multiquadric')
 rbfk1 = Rbf(x1, y1, z1, function='multiquadric')
+interpolacionK2 = interp1d(x2, y2)
 
 
 
 def index(request):
     return HttpResponse("You're interpolacion in ABACO.")
-def RBFevaluar(request, puntoX,puntoY):
+def RBFevaluarK34(request, puntoX,puntoY):
     estima= float(rbfk34(puntoX,puntoY))
     #print(f"Interpolated ({puntoX}, {puntoY}) is  {type(estima)}")
     data = {"x":puntoX,"y":puntoY,"valor": estima/1000}
     #return HttpResponse(f"<h1>{estima}</h1>")
     return JsonResponse(data)
-    
+def RBFevaluarK1(request, puntoX,puntoY):
+    estima= float(rbfk34(puntoX,puntoY))
+    #print(f"Interpolated ({puntoX}, {puntoY}) is  {type(estima)}")
+    data = {"x":puntoX,"y":puntoY,"valor": estima/1000}
+    #return HttpResponse(f"<h1>{estima}</h1>")
+    return JsonResponse(data)
+def RBFevaluarK2(request, puntoX):
+    estima= float(interpolacionK2(puntoX))
+    #print(f"Interpolated ({puntoX}, {puntoY}) is  {type(estima)}")
+    data = {"x":puntoX,"valor": estima}
+    #return HttpResponse(f"<h1>{estima}</h1>")
+    return JsonResponse(data)
     
