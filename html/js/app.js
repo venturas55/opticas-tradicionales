@@ -379,10 +379,7 @@ var app = new Vue({
       //TODO:
       return this.P / this.V;
     },
-    L1: function () {
-      //TODO:
-      return 1689.44;
-    },
+
     tau0: function () {
       console.log(this.caracteristicaToArray(this.caracteristica));
       return this.minimoDestello(
@@ -413,6 +410,16 @@ var app = new Vue({
     TC: function () {
       //TODO:
       return 0.74;
+    },
+    phi: function () {
+      return this.L/Math.PI/4*10000;
+    },
+    Lcalc: function () {
+return this.phi/this.b/this.h;
+    },
+    L1: function () {
+      //TODO:
+      return 1689.44;
     },
     L2: function () {
       //TODO:

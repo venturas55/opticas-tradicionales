@@ -57,7 +57,7 @@
 
         <div class="d-flex flex-row justify-content-center ">
           <div class="d-flex flex-column justify-content-center ">
-            <p v-if="horizonte"> b: <input type="number" v-model="b" class="w-50"></p>
+            <p v-if="horizonte"> b (mm): <input type="number" v-model="b" class="w-50"></p>
             <p v-if="horizonte"> L: <input type="number" v-model="L" class="w-50"></p>
             <p v-if="horizonte"> h2: <input type="number" v-model="h2" class="w-50"></p>
             <p v-if="horizonte"> h3: <input type="number" v-model="h3" class="w-50"></p>
@@ -86,7 +86,7 @@
             <p v-if="!horizonte"> c3_I: <input type="number" v-model="c3_I" class="w-50"></p>
             <p v-if="!horizonte"> a3_II: <input type="number" v-model="a3_II" class="w-50"></p>
             <p v-if="!horizonte"> c3_II: <input type="number" v-model="c3_II" class="w-50"></p>
-            <p v-if="!horizonte"> L: <input type="number" v-model="L" class="w-50"></p>
+            <p v-if="!horizonte"> L: <input type="number" v-model="L" class="w-50">lum</p>   <p> I: {{phi | redondeo2}}cd  Lcalc={{Lcalc | redondeo2}}cd/m2  </p>
           </div>
           <div class="d-flex flex-column justify-content-center ">
             <p v-if="!horizonte"> Pf (ad): <input type="number" v-model="Pf" class="w-50"></p>
@@ -114,6 +114,8 @@
             <p> c2 (ad): {{c2}}</p>
             <p> c2_I (ad): {{c2_I}}</p>
             <p> L1 (cd/cm2): {{L1}} </p>
+            <p> K3 (ad): {{k3Result | redondeo3 }}</p>
+            <p> K4 (ad): {{k4Result | redondeo3 }}</p>
             <p> Tau0: {{tau0}}</p>
             <p> F1 (ad): {{F1}} </p>
             <p> F2 (ad): {{F2}} </p>
