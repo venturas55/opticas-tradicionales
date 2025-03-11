@@ -12,7 +12,7 @@ var app = new Vue({
     umbral1: null,
     destello: "0.5",
 
-    alcance_luminoso_nominal: 25,
+    alcance_luminoso_nominal: 20,
     alcance_requerido_CI: 19.3,
     alcance_requerido_CII: 15.2,
     caracteristica:
@@ -315,7 +315,7 @@ var app = new Vue({
     // Call K3 and update k3Result
     fetchK3Result: async function () {
       try {
-        this.k3Result = await this.getK34(this.tita1, this.tita2); // Store the result in k3Result 
+        this.k3Result = await this.getK34(this.tita1, this.tita2); // Store the result in k3Result
       } catch (error) {
         console.error("Error in K3:", error);
         this.k3Result = null; // Reset the result in case of error
@@ -350,9 +350,9 @@ var app = new Vue({
       //TODO: SOLO AÑADO UN +0.2
       //Si angulo>30 y=−0.01167x+1.0851
       if (this.tita >= 30) {
-        return (-0.01167 * this.tita + 1.0851+0.2).toFixed(4);
+        return (-0.01167 * this.tita + 1.0851 + 0.2).toFixed(4);
       } else if (this.tita >= 20) {
-        return (-0.0075 * this.tita + 0.96 +0.2).toFixed(4);
+        return (-0.0075 * this.tita + 0.96 + 0.2).toFixed(4);
       } else {
         return (
           (
@@ -412,10 +412,10 @@ var app = new Vue({
       return 0.74;
     },
     phi: function () {
-      return this.L/Math.PI/4*10000;
+      return this.L / Math.PI / 4;
     },
     Lcalc: function () {
-return this.phi/this.b/this.h;
+      return (this.phi / this.b / this.h) * 10000;
     },
     L1: function () {
       //TODO:
@@ -449,15 +449,16 @@ return this.phi/this.b/this.h;
       return this.obtenerTA(this.zona, this.TA);
     },
     alcance_luminoso_nominal_calculado: function () {
-      //console.log((this.obtenerTA(this.zona, this.TA)));
+      console.log(this.obtenerTA(this.zona, this.TA));
       //NEWTON RAPSHON!!! con poca luminancia de fondo 0.000002
       var D = this.alcance_luminoso_nominal,
         fx,
         fprimax,
         vis;
       vis = 9;
-      vis = this.obtenerTA(this.zona, this.TA);
-      //console.log(vis);
+      //vis = this.obtenerTA(this.zona, this.TA); Transmisividad
+      vis = Transmisividad
+      console.log(vis);
       if (vis > 1) {
         do {
           //fx = 0.686 * D ** 2 - this.Icalculo * vis ** D;
@@ -467,20 +468,20 @@ return this.phi/this.b/this.h;
           //fprimax = 2 * 0.686 * D - (this.Icalculo * vis ** D) * this.getBaseLog(Math.E,vis);
           fprimax = -[
             0.05 ** -(D / vis) * 2 * 3430000 * 2 * 10 ** -6 * D +
-            3430000 *
-            2 *
-            10 ** -6 *
-            D ** 2 *
-            this.getBaseLog(Math.E, 0.05) *
-            0.05 ** -(D / vis) *
-            (-1 / vis),
+              3430000 *
+                2 *
+                10 ** -6 *
+                D ** 2 *
+                this.getBaseLog(Math.E, 0.05) *
+                0.05 ** -(D / vis) *
+                (-1 / vis),
           ];
           D = D - fx / fprimax;
           //console.log(fx + " " + fprimax + " " + fx / fprimax + " " + D);
         } while (fx / fprimax > 0.01);
       }
 
-      return D.toFixed(2);
+      return D;
     },
     dv: function () {
       return ((2 * Math.atan(this.h / 2 / this.f) * 180) / Math.PI).toFixed(2);
@@ -496,20 +497,24 @@ return this.phi/this.b/this.h;
           this.K *
           [
             this.b *
-            (this.h2 * this.L2 * this.K2 +
-              this.h3 * this.L3 * this.k3Result +
-              this.K2prima * this.h4 * this.L4 * this.k4Result),
+              (this.h2 * this.L2 * this.K2 +
+                this.h3 * this.L3 * this.k3Result +
+                this.K2prima * this.h4 * this.L4 * this.k4Result),
           ]
         ).toFixed(2);
       } else {
-/*         return (
-          this.L1 *
+               return (
+          this.Lcalc *
           (this.a2 * this.c2 +
             this.a2_I * this.c2_I +
             this.a3_I * this.Pf * this.c3_I +
             this.a3_II * this.Pf * this.c3_II)
-        ).toFixed(2); */
-        return ( this.h2*this.d2*this.L2*this.K2+this.h3*this.d*this.L3*this.k3Result+this.h4*this.d*this.L4*this.k4Result)
+        ).toFixed(2); 
+        /*  return (
+          this.h2 * this.d2 * this.L2 * this.K2 +
+          this.h3 * this.d * this.L3 * this.k3Result +
+          this.h4 * this.d * this.L4 * this.k4Result
+        );*/
       }
     },
     Ieficaz: function () {
