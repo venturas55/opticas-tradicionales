@@ -19,10 +19,10 @@ var app = new Vue({
       "L0.200 Oc2.900 L0.200 Oc8.600 L0.200 Oc2.900 L0.200 Oc2.900 L0.200 Oc8.600 L0.200 Oc2.900 L0.200 Oc2.900 L0.200 Oc2.900 L0.200 Oc8.600",
     apariencia_origen: " GpD(2+4)",
     horizonte: false,
-    a2: 914,
-    tita: 34,
-    a2_I: 563,
-    titaI: 19,
+    a2: 2358, //anillo dioptrico. Simetricos pones el total. asimetricos solamente una de las partes
+    tita: 30, //angulo que forma con el foco, el mas grande
+    a2_I: 1395,
+    titaI: 21, // el angulo mas pequeño en asimetricos
 
     K: 1,
     Kprima: 1,
@@ -32,13 +32,13 @@ var app = new Vue({
     Tc: "c",
     Rc: 0.15,
     Tau: 0.8,
-    a3_I: 853,
-    c3_I: 0.85,
-    a3_II: 1168,
+    a3_I: 9681, //superficie catadioptrica superior . de mitad para arriba
+    c3_I: 0.85, //cuando anillos catadiptricos superiores estan retrasados
+    a3_II: 6337,
     c3_II: 0.85,
 
-    Pf: 0.5,
-    b: 2,
+    Pf: 0.6, //en funcion del tipo de lampara (cuanto aprovecha de la luz hacia arriba para los catadioptricos)
+    b: 1.28,
     L: 650,
     h2: 30,
     h3: 21,
@@ -53,9 +53,9 @@ var app = new Vue({
     T: 30,
     h: 4,
     F3: 0.85,
-    F4: 1,
-    F5: 3,
-    H: 50,
+    F4: 1,//filtro
+    F5: 3,//luz de fondo
+    H: 50, //altura del tramo focal con respecto al mar
 
     altura_ojo: 4,
     apariencia_limite: "L0.194 Oc3.806 L0.194 Oc3.806 L0.194 Oc11.806",
